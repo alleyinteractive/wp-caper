@@ -10,9 +10,7 @@
         }
     ],
     "autoload": {
-        "wordpress": {
-            "Alley": "src/Alley"
-        }
+        "classmap": ["src/"]
     },
     "config": {
         "optimize-autoloader": true,
