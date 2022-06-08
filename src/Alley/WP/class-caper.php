@@ -309,7 +309,7 @@ final class Caper {
 	/**
 	 * Whether a particular user has a specific role or roles.
 	 *
-	 * @param int|\WP_User $user User ID or object.
+	 * @param int|\WP_User $user  User ID or object.
 	 * @param string|array $roles Role name or names to check.
 	 * @return bool Whether the user has any of the given roles.
 	 */
