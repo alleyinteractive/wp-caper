@@ -1,6 +1,6 @@
 # Caper
 
-`Caper` provides a fluent interface for distributing post type, taxonomy, or generic primitive capabilities to roles.
+`Caper` provides a fluent interface for distributing post type, taxonomy, or generic primitive capabilities to roles in WordPress.
 
 An invocation of `Caper` takes the form of "`<grant to|deny to>` `<these roles>` `<these capabilities>`."
 
