@@ -22,17 +22,14 @@ jobs:
           - 3306:3306
         options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
     continue-on-error: ${{ matrix.can_fail }}
-
     name: WordPress ${{ matrix.wp_version }} @ PHP ${{ matrix.php }} (WP_MULTISITE=${{ matrix.multisite }})
     env:
-      CACHEDIR: /tmp
       WP_CORE_DIR: /tmp/wordpress
       WP_VERSION: ${{ matrix.wp_version }}
       WP_MULTISITE: ${{ matrix.multisite }}
       WP_DB_HOST: 127.0.0.1
       WP_DB_USER: root
       WP_DB_PASSWORD: '""'
-
     steps:
       - name: Check out code
         uses: actions/checkout@v3
