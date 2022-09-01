@@ -9,11 +9,6 @@
       "email": "info@alley.co"
     }
   ],
-  "autoload": {
-    "classmap": [
-      "src/"
-    ]
-  },
   "config": {
     "allow-plugins": {
       "alleyinteractive/composer-wordpress-autoloader": true,
@@ -37,6 +32,12 @@
   },
   "extra": {
     "wordpress-autoloader": {
+      "autoload": {
+        "Alley\\": "src/Alley/"
+      },
+      "autoload-dev": {
+        "Alley\\": "tests/Alley/"
+      },
       "inject": true
     }
   }
