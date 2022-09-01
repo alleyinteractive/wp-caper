@@ -2,6 +2,16 @@
 
 `Caper` provides a fluent interface for distributing post type, taxonomy, or generic primitive capabilities to roles in WordPress.
 
+## Installation
+
+Install the latest version with:
+
+```bash
+$ composer require alleyinteractive/wp-caper
+```
+
+## Basic usage
+
 An invocation of `Caper` takes the form of "`<grant to|deny to>` `<these roles>` `<these capabilities>`."
 
 `Caper` can distribute primitive capabilities directly:
@@ -127,7 +137,7 @@ use Alley\WP\Caper;
 Caper::grant_to( 'editor' )->primitives( 'manage_options' )->at_priority( 99 );
 ```
 
-## Ensuring unique capability types
+### Ensuring unique capability types
 
 `Caper` does not attempt to determine whether the post type or taxonomy capabilities it distributes are unique to that object type.
 
@@ -176,3 +186,13 @@ will also deny editors capabilities for the `post` post type. Registering post t
     ]
 );
 ```
+
+## About
+
+### License
+
+[GPL-2.0-or-later](https://github.com/alleyinteractive/wp-caper/blob/main/LICENSE)
+
+### Maintainers
+
+[Alley Interactive](https://github.com/alleyinteractive)
