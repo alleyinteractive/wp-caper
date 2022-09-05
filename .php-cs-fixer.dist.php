@@ -30,6 +30,6 @@ $config->setRules(
 		'native_function_type_declaration_casing' => true,
 	]
 );
-$config->setFinder($finder);
+$config->setFinder( $finder );
 
 return $config;
