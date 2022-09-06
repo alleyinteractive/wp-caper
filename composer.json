@@ -33,10 +33,10 @@
   "extra": {
     "wordpress-autoloader": {
       "autoload": {
-        "Alley\\": "src/Alley/"
+        "Alley\\": "src/alley/"
       },
       "autoload-dev": {
-        "Alley\\": "tests/Alley/"
+        "Alley\\": "tests/alley/"
       }
     }
   }
