@@ -6,6 +6,12 @@ This library adheres to [Semantic Versioning](https://semver.org/) and [Keep a C
 
 Nothing yet.
 
+## 2.0.0
+
+### Removed
+
+- PHP 7.4 support.
+
 ## 1.0.0
 
 Initial release.
