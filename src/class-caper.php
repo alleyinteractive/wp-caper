@@ -19,7 +19,7 @@ final class Caper {
 	/**
 	 * The roles to which this instance grants or denies capabilities.
 	 *
-	 * @var array
+	 * @var string[]
 	 */
 	private array $positive_roles = [];
 
@@ -33,21 +33,21 @@ final class Caper {
 	/**
 	 * Primitive capabilities to distribute directly.
 	 *
-	 * @var array
+	 * @var string[]
 	 */
 	private array $primitives = [];
 
 	/**
 	 * Post types whose capabilities should be distributed.
 	 *
-	 * @var array
+	 * @var string[]
 	 */
 	private array $post_types = [];
 
 	/**
 	 * Taxonomies whose capabilities should be distributed.
 	 *
-	 * @var array
+	 * @var string[]
 	 */
 	private array $taxonomies = [];
 
@@ -55,7 +55,7 @@ final class Caper {
 	 * For post types or taxonomies, generic primitive capabilities
 	 * to grant instead of deny, or vice versa.
 	 *
-	 * @var array
+	 * @var string[]
 	 */
 	private array $exceptions = [];
 
@@ -63,7 +63,7 @@ final class Caper {
 	 * For post types or taxonomies, the exclusive set of generic primitive
 	 * capabilities to grant or deny.
 	 *
-	 * @var array
+	 * @var string[]
 	 */
 	private array $only = [];
 
@@ -77,23 +77,23 @@ final class Caper {
 	/**
 	 * A special array used by this class to stand for "all roles."
 	 *
-	 * @var array
+	 * @var string[]
 	 */
 	private const ALL_ROLES = [ '__ALL__' ];
 
 	/**
 	 * Meta capabilities for taxonomy terms.
 	 *
-	 * @var array
+	 * @var string[]
 	 */
 	private const TAXONOMY_META_CAPABILITIES = [ 'edit_term', 'delete_term', 'assign_term' ];
 
 	/**
 	 * Set up.
 	 *
-	 * @param array $positive_roles The roles to which this instance grants or denies capabilities.
-	 * @param bool  $allow          Whether capabilities are being granted or denied.
-	 * @param int   $priority       Priority at which to filter user capabilities.
+	 * @param string[] $positive_roles The roles to which this instance grants or denies capabilities.
+	 * @param bool     $allow          Whether capabilities are being granted or denied.
+	 * @param int      $priority       Priority at which to filter user capabilities.
 	 */
 	private function __construct( array $positive_roles, bool $allow, int $priority ) {
 		$this->positive_roles = $positive_roles;
@@ -105,7 +105,7 @@ final class Caper {
 	/**
 	 * Start a Caper that grants capabilities to roles.
 	 *
-	 * @param string|array $positive_roles The roles to affect.
+	 * @param string|string[] $positive_roles The roles to affect.
 	 * @return self Class instance.
 	 */
 	public static function grant_to( $positive_roles ): self {
@@ -124,7 +124,7 @@ final class Caper {
 	/**
 	 * Start a Caper that denies capabilities to roles.
 	 *
-	 * @param string|array $positive_roles The roles to affect.
+	 * @param string|string[] $positive_roles The roles to affect.
 	 * @return self Class instance.
 	 */
 	public static function deny_to( $positive_roles ): self {
@@ -143,7 +143,7 @@ final class Caper {
 	/**
 	 * Set primitive capabilities to grant or deny.
 	 *
-	 * @param string|array $primitives Array of primitive capabilities.
+	 * @param string|string[] $primitives Array of primitive capabilities.
 	 * @return self Class instance.
 	 */
 	public function primitives( $primitives ): self {
@@ -161,7 +161,7 @@ final class Caper {
 	 * and taxonomy share a name, use the Caper::caps_for_post_type() or
 	 * Caper::caps_for_taxonomy() methods directly to disambiguate.
 	 *
-	 * @param string|array $type Post type or taxonomy names.
+	 * @param string|string[] $type Post type or taxonomy names.
 	 * @return self Class instance.
 	 */
 	public function caps_for( $type ): self {
@@ -173,7 +173,7 @@ final class Caper {
 	/**
 	 * Set the post types whose capabilities will be granted or denied.
 	 *
-	 * @param string|array $type Post type or types.
+	 * @param string|string[] $type Post type or types.
 	 * @return self Class instance.
 	 */
 	public function caps_for_post_type( $type ): self {
@@ -185,7 +185,7 @@ final class Caper {
 	/**
 	 * Set the taxonomies whose capabilities will be granted or denied.
 	 *
-	 * @param string|array $type Taxonomy or taxonomies.
+	 * @param string|string[] $type Taxonomy or taxonomies.
 	 * @return self Class instance.
 	 */
 	public function caps_for_taxonomy( $type ): self {
@@ -205,7 +205,7 @@ final class Caper {
 	 * this method 'edit_published_posts', not 'edit_published_books'. The
 	 * actual capabilities to grant or deny will be determined automatically.
 	 *
-	 * @param string|array $primitives Generic capability names to grant instead
+	 * @param string|string[] $primitives Generic capability names to grant instead
 	 *                                 of deny, or vice versa, depending on the
 	 *                                 value of $allow.
 	 * @return self Class instance.
@@ -226,7 +226,7 @@ final class Caper {
 	 * this method 'edit_published_posts', not 'edit_published_books'. The
 	 * actual capabilities to grant or deny will be determined automatically.
 	 *
-	 * @param string|array $primitives Generic capability names to grant or deny.
+	 * @param string|string[] $primitives Generic capability names to grant or deny.
 	 * @return self Class instance.
 	 */
 	public function only( $primitives ): self {
@@ -257,7 +257,7 @@ final class Caper {
 	 *         ->except( 'delete_posts' )
 	 *         ->then_grant_to( 'administrator' );
 	 *
-	 * @param string|array $positive_roles The roles to affect.
+	 * @param string|string[] $positive_roles The roles to affect.
 	 * @return self New class instance.
 	 */
 	public function then_grant_to( $positive_roles ): self {
@@ -275,7 +275,7 @@ final class Caper {
 	 *         ->caps_for( 'post' )
 	 *         ->then_deny_to( [ 'subscriber', 'contributor' ] );
 	 *
-	 * @param string|array $positive_roles The roles to affect.
+	 * @param string|string[] $positive_roles The roles to affect.
 	 * @return self New class instance.
 	 */
 	public function then_deny_to( $positive_roles ): self {
@@ -287,11 +287,11 @@ final class Caper {
 	/**
 	 * Dynamically filter a user's capabilities.
 	 *
-	 * @param array    $allcaps An array of all the user's capabilities.
-	 * @param array    $caps    Actual capabilities for meta capability.
-	 * @param array    $args    Optional parameters passed to has_cap(), typically object ID.
+	 * @param bool[]   $allcaps An array of all the user's capabilities.
+	 * @param string[] $caps    Actual capabilities for meta capability.
+	 * @param mixed[]  $args    Optional parameters passed to has_cap(), typically object ID.
 	 * @param \WP_User $user    The user object.
-	 * @return array The updated array of the user's capabilities.
+	 * @return bool[] The updated array of the user's capabilities.
 	 */
 	public function filter_user_has_cap( $allcaps, $caps, $args, $user ) {
 		unset( $caps, $args );
@@ -309,8 +309,8 @@ final class Caper {
 	/**
 	 * Whether a particular user has a specific role or roles.
 	 *
-	 * @param int|\WP_User $user  User ID or object.
-	 * @param string|array $roles Role name or names to check.
+	 * @param int|\WP_User    $user  User ID or object.
+	 * @param string|string[] $roles Role name or names to check.
 	 * @return bool Whether the user has any of the given roles.
 	 */
 	public static function users_roles_intersect( $user, $roles ): bool {
@@ -345,7 +345,7 @@ final class Caper {
 	/**
 	 * Get the associative array of capabilities to be granted or denied.
 	 *
-	 * @return array Array of capabilities and their status.
+	 * @return bool[] Array of capabilities and their status.
 	 */
 	private function get_map() {
 		$result = [];
@@ -355,16 +355,20 @@ final class Caper {
 		}
 
 		foreach ( $this->post_types as $post_type ) {
-			if ( post_type_exists( $post_type ) ) {
-				$post_type_primitives_map = $this->get_post_type_primitives_map( get_post_type_object( $post_type ) );
+			$pt_object = get_post_type_object( $post_type );
+
+			if ( $pt_object instanceof \WP_Post_Type ) {
+				$post_type_primitives_map = $this->get_post_type_primitives_map( $pt_object );
 
 				$result = array_merge( $result, $this->map_primitives_array( $post_type_primitives_map ) );
 			}
 		}
 
 		foreach ( $this->taxonomies as $taxonomy ) {
-			if ( taxonomy_exists( $taxonomy ) ) {
-				$taxonomy_primitives_map = $this->get_taxonomy_primitives_map( get_taxonomy( $taxonomy ) );
+			$tax_object = get_taxonomy( $taxonomy );
+
+			if ( $tax_object instanceof \WP_Taxonomy ) {
+				$taxonomy_primitives_map = $this->get_taxonomy_primitives_map( $tax_object );
 
 				$result = array_merge( $result, $this->map_primitives_array( $taxonomy_primitives_map ) );
 			}
@@ -377,7 +381,7 @@ final class Caper {
 	 * Get the map of generic to actual primitive capabilities for a post type.
 	 *
 	 * @param \WP_Post_Type $post_type Post type object.
-	 * @return array The map of capabilities cast as an array.
+	 * @return string[] The map of capabilities cast as an array.
 	 */
 	private function get_post_type_primitives_map( \WP_Post_Type $post_type ) {
 		global $post_type_meta_caps;
@@ -406,6 +410,8 @@ final class Caper {
 			unset( $cap['read'] );
 		}
 
+		$cap = array_filter( $cap, 'is_string' );
+
 		return $cap;
 	}
 
@@ -413,7 +419,7 @@ final class Caper {
 	 * Get the primitive capability keys and names for a taxonomy.
 	 *
 	 * @param \WP_Taxonomy $taxonomy Taxonomy to use.
-	 * @return array Associative array of primitive taxonomy capability keys and their values for the taxonomy.
+	 * @return string[] Associative array of primitive taxonomy capability keys and their values for the taxonomy.
 	 */
 	private function get_taxonomy_primitives_map( \WP_Taxonomy $taxonomy ) {
 		$cap = get_object_vars( (object) $taxonomy->cap );
@@ -424,14 +430,16 @@ final class Caper {
 			}
 		}
 
+		$cap = array_filter( $cap, 'is_string' );
+
 		return $cap;
 	}
 
 	/**
 	 * Get the associative array of an object's capabilities to grant or deny.
 	 *
-	 * @param array $map Map of post type or taxonomy capabilities.
-	 * @return array Array of capabilities and their status.
+	 * @param string[] $map Map of post type or taxonomy capabilities.
+	 * @return bool[] Array of capabilities and their status.
 	 */
 	private function map_primitives_array( array $map ) {
 		$result = array_fill_keys( array_values( $map ), $this->allow );
@@ -460,7 +468,7 @@ final class Caper {
 	 *
 	 * @param self $instance Other class instance.
 	 */
-	private function then_to( self $instance ) {
+	private function then_to( self $instance ): void {
 		if ( $this->primitives ) {
 			$instance->primitives( $this->primitives );
 		}

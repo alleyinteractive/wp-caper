@@ -7,7 +7,7 @@
 Install the latest version with:
 
 ```bash
-$ composer require alleyinteractive/wp-caper
+composer require alleyinteractive/wp-caper
 ```
 
 ## Basic usage

@@ -1,6 +1,6 @@
 <?php
 /**
- * Class file for Test_Caper
+ * Class file for CaperTest
  *
  * (c) Alley <info@alley.com>
  *
@@ -10,14 +10,16 @@
  * @package wp-caper
  */
 
-namespace Alley\WP;
+namespace Alley\WP\Tests\Unit;
 
+use Alley\WP\Caper;
 use Mantle\Testkit\Test_Case;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 /**
  * Tests the Caper class.
  */
-final class Test_Caper extends Test_Case {
+final class CaperTest extends Test_Case {
 	/**
 	 * Test role name.
 	 *
@@ -65,6 +67,21 @@ final class Test_Caper extends Test_Case {
 
 		$this->reset_post_types();
 		$this->reset_taxonomies();
+	}
+
+	/**
+	 * The $caps_for argument for testing post type or taxonomy manipulation.
+	 *
+	 * One form tests the argument when provided as a string, and the other form
+	 * tests the argument when provided as an array.
+	 *
+	 * @return array
+	 */
+	public static function data_string_or_array_of_object_names() {
+		return [
+			[ self::DATA1 ],
+			[ [ self::DATA1, self::DATA2 ] ],
+		];
 	}
 
 	/**
@@ -152,29 +169,13 @@ final class Test_Caper extends Test_Case {
 	}
 
 	/**
-	 * The $caps_for argument for testing post type or taxonomy manipulation.
-	 *
-	 * One form tests the argument when provided as a string, and the other form
-	 * tests the argument when provided as an array.
-	 *
-	 * @return array
-	 */
-	public function data_string_or_array_of_object_names() {
-		return [
-			[ self::DATA1 ],
-			[ [ self::DATA1, self::DATA2 ] ],
-		];
-	}
-
-	/**
 	 * Test changing whether post type capabilities are possessed, then
 	 * flipping them back to their original state (with an exception).
-	 *
-	 * @dataProvider data_string_or_array_of_object_names
 	 *
 	 * @param string|array $string_or_array_of_post_types The post type or post types to pass to
 	 *                                                    Caper to grant or deny.
 	 */
+	#[DataProvider( 'data_string_or_array_of_object_names' )]
 	public function test_manipulating_post_type( $string_or_array_of_post_types ) {
 		register_post_type( // phpcs:ignore WordPress.NamingConventions.ValidPostTypeSlug.NotStringLiteral
 			self::DATA1,
@@ -284,11 +285,10 @@ final class Test_Caper extends Test_Case {
 	 * Test changing whether taxonomy capabilities are possessed, then flipping
 	 * them back to their original state (with an exception).
 	 *
-	 * @dataProvider data_string_or_array_of_object_names
-	 *
 	 * @param string|array $string_or_array_of_taxonomies The taxonomy or taxonomies to
 	 *                                                    pass to Caper to grant or deny.
 	 */
+	#[DataProvider( 'data_string_or_array_of_object_names' )]
 	public function test_manipulating_taxonomy( $string_or_array_of_taxonomies ) {
 		register_taxonomy(
 			self::DATA1,
